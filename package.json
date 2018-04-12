@@ -1,0 +1,19 @@
+{
+  "name": "@littleq/template-viewer-lite",
+  "version": "0.0.1",
+  "description": "Template viewer that views template",
+  "main": "template-viewer-lite.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tjmonsi/template-viewer-lite.git"
+  },
+  "author": "TJ Monserrat",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tjmonsi/template-viewer-lite/issues"
+  },
+  "homepage": "https://github.com/tjmonsi/template-viewer-lite#readme"
+}

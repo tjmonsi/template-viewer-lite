@@ -14,7 +14,15 @@ class TemplateContainerLite extends window.HTMLElement {
   
   constructor () {
     super();
-    this.attachShadow({mode: 'open'}).appendChild(document.createElement('slot'));
+    this.__templateInitialized = false;
+    this.attachShadow({mode: 'open'});
+  }
+  
+  connectedCallback () {
+    if (!this.__templateInitialized) {
+      this.shadowRoot.appendChild(document.createElement('slot'));
+    }
+    this.__templateInitialized = true;
   }
   
   setContent (content) {

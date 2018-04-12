@@ -16,10 +16,13 @@ class TemplateViewerLite extends window.HTMLElement {
     super();
     this.__data = {};
     this.__templateInitialized = false;
-    this.attachShadow({mode: 'open'}).appendChild(document.createElement('slot'));
+    this.attachShadow({mode: 'open'});
   }
   
   connectedCallback () {
+    if (!this.__templateInitialized) {
+      this.shadowRoot.appendChild(document.createElement('slot'));
+    }
     this.__templateInitialized = true;
     this._templateChanged(this.template || this.getAttribute('template'));
   }

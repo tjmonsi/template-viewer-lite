@@ -28,6 +28,7 @@ class TemplateViewerLite extends window.HTMLElement {
   }
   
   set template (template) {
+    if (!template) return;
     this.__data.template = template;
     if (this.__templateInitialized) {
       this._templateChanged(template);

@@ -28,7 +28,6 @@ class TemplateViewerLite extends window.HTMLElement {
   }
   
   set template (template) {
-    if (!template) return;
     this.__data.template = template;
     if (this.__templateInitialized) {
       this._templateChanged(template);
@@ -60,6 +59,7 @@ class TemplateViewerLite extends window.HTMLElement {
   }
   
   _templateChanged (template) {
+    if (!template) return;
     const clone = document.importNode(template.content, true);
     this._closeTemplate(clone);
   }

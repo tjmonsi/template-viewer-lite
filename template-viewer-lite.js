@@ -11,14 +11,14 @@ class TemplateViewerLite extends window.HTMLElement {
   static get is () {
     return 'template-viewer-lite';
   }
-  
+
   constructor () {
     super();
     this.__data = {};
     this.__templateInitialized = false;
-    this.attachShadow({mode: 'open'});
+    this.attachShadow({ mode: 'open' });
   }
-  
+
   connectedCallback () {
     if (!this.__templateInitialized) {
       this.shadowRoot.appendChild(document.createElement('slot'));
@@ -26,7 +26,7 @@ class TemplateViewerLite extends window.HTMLElement {
     this.__templateInitialized = true;
     this._templateChanged(this.template || this.getAttribute('template'));
   }
-  
+
   set template (template) {
     this.__data.template = template;
     if (this.__templateInitialized) {
@@ -37,27 +37,40 @@ class TemplateViewerLite extends window.HTMLElement {
   get template () {
     return this.__data.template;
   }
-  
+
   _closeTemplate (clone) {
     const oldContainer = this.querySelector('template-container-lite[active]');
+    let flag = true;
+
     if (oldContainer) {
-      oldContainer.setAttribute('closing', '');
-      setTimeout(() => {
-        this.removeChild(oldContainer);
-        this._openTemplate(clone);
-      }, 200);  
+      if (oldContainer.children.length) {
+        for (let i = 0; i < oldContainer.children.length; i++) {
+          if (clone.children[i] && clone.children[i].tagName !== oldContainer.children[i].tagName) {
+            flag = false;
+            break;
+          }
+        }
+      }
+
+      if (!flag) {
+        oldContainer.setAttribute('closing', '');
+        setTimeout(() => {
+          this.removeChild(oldContainer);
+          this._openTemplate(clone);
+        }, 200);
+      }
     } else {
       this._openTemplate(clone);
     }
   }
-  
+
   _openTemplate (clone) {
     const container = document.createElement('template-container-lite');
     container.setAttribute('active', '');
     container.setContent(clone);
     this.appendChild(container);
   }
-  
+
   _templateChanged (template) {
     if (!template) return;
     const clone = document.importNode(template.content, true);
